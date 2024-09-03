@@ -7,18 +7,25 @@ import {
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
+import { useState } from "react";
+import { StateUpdater } from "./types";
 
-function App() {
-  const isLoggedIn = false;
+const App: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
   return (
     <Router>
       <Switch>
         <Route path="/" exact>
-          {isLoggedIn ? <Home /> : <Login />}
+          {isLoggedIn ? (
+            <Home setIsLoggedIn={setIsLoggedIn} />
+          ) : (
+            <Login setIsLoggedIn={setIsLoggedIn} />
+          )}
         </Route>
         <Route path="/example">
-          <h1>Ex</h1>
-          {!isLoggedIn ? "Plz, login" : null}
+          <h1>Example Page</h1>
+          {!isLoggedIn && <p>Please, log in</p>}
         </Route>
         <Route>
           <NotFound />
@@ -26,6 +33,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;
