@@ -5,8 +5,11 @@
 - [x] Router
 - [x] Authentication
 - [x] Arch.
-- [ ] Styles
-- [ ] Log In
+- [x] Styles
+
+## PAGES
+
+- [ ] Log In / Sigh Up
 
 ## REFERENCES
 
