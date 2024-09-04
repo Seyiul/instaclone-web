@@ -1,15 +1,12 @@
 import React from "react";
-import { StateUpdater } from "../types";
+import { isLoggedInVar } from "../apollo";
+type HomeProps = {};
 
-type HomeProps = {
-  setIsLoggedIn: StateUpdater<boolean>;
-};
-
-const Home: React.FC<HomeProps> = ({ setIsLoggedIn }) => {
+const Home: React.FC<HomeProps> = () => {
   return (
     <div>
       <h1>Welcome to Home</h1>
-      <button onClick={() => setIsLoggedIn(false)}>Logout</button>
+      <button onClick={() => isLoggedInVar(false)}>Log out🥹</button>
     </div>
   );
 };

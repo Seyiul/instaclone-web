@@ -1,15 +1,12 @@
 import React from "react";
-import { StateUpdater } from "../types";
+import { isLoggedInVar } from "../apollo";
+type LoginProps = {};
 
-type LoginProps = {
-  setIsLoggedIn: StateUpdater<boolean>;
-};
-
-const Login: React.FC<LoginProps> = ({ setIsLoggedIn }) => {
+const Login: React.FC<LoginProps> = ({}) => {
   return (
     <div>
       <h1>Login</h1>
-      <button onClick={() => setIsLoggedIn(true)}>Login</button>
+      <button onClick={() => isLoggedInVar(true)}>Log in now!</button>
     </div>
   );
 };
