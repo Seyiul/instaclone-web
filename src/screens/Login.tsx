@@ -18,6 +18,7 @@ const Container = styled.div`
 const WhiteBox = styled.div`
   background-color: white;
   border: 1px solid rgb(219, 219, 219);
+  width: 100%;
 `;
 
 const TopBox = styled(WhiteBox)`
@@ -34,29 +35,32 @@ const TopBox = styled(WhiteBox)`
     justify-items: center;
     flex-direction: column;
     align-items: center;
-    input {
-      width: 100%;
-      border-radius: 3px;
-      padding: 7px;
-      background-color: #fafafa;
-      border: 0.5px solid rgb(219, 219, 219);
-      margin-top: 5px;
-      box-sizing: border-box;
-      &::placeholder {
-        font-size: 12px;
-      }
-      &:last-child {
-        border: none;
-        margin-top: 12px;
-        background-color: #0095f6;
-        color: white;
-        text-align: center;
-        padding: 8px 0px;
-
-        font-weight: 600;
-      }
-    }
   }
+`;
+
+const Input = styled.input`
+  width: 100%;
+  border-radius: 3px;
+  padding: 7px;
+  background-color: #fafafa;
+  border: 0.5px solid rgb(219, 219, 219);
+  margin-top: 5px;
+  box-sizing: border-box;
+  &::placeholder {
+    font-size: 12px;
+  }
+`;
+
+const Button = styled.input`
+  border: none;
+  margin-top: 12px;
+  background-color: ${(props) => props.theme.blue};
+  color: white;
+  text-align: center;
+  padding: 8px 0px;
+  width: 100%;
+  font-weight: 600;
+  cursor: pointer;
 `;
 
 const BottomBox = styled(WhiteBox)`
@@ -64,7 +68,7 @@ const BottomBox = styled(WhiteBox)`
   text-align: center;
   a {
     font-weight: 600;
-    color: #0095f6;
+    color: ${(props) => props.theme.blue};
   }
 `;
 
@@ -109,9 +113,9 @@ function Login() {
             <FontAwesomeIcon icon={faInstagram} size="3x" />
           </div>
           <form>
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
-            <input type="submit" value="Log in" />
+            <Input type="text" placeholder="Username" />
+            <Input type="password" placeholder="Password" />
+            <Button type="submit" value="Log in" />
           </form>
           <Separator>
             <div></div>
