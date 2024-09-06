@@ -10,9 +10,7 @@ const SButton = styled.input`
   width: 100%;
   font-weight: 600;
   cursor: pointer;
-  &:disabled {
-    opacity: 0.4;
-  }
+  opacity: ${(props) => (props.disabled ? "0.4" : "1")};
 `;
 function Button(props: React.ComponentPropsWithRef<"input">) {
   return <SButton {...props} />;
