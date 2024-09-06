@@ -12,6 +12,7 @@ import FormBox from "../components/auth/FormBox";
 import routes from "../routes";
 import BottomBox from "../components/auth/BottomBox";
 import { FatLink } from "../components/shared";
+import PageTitle from "../components/PageTitle";
 
 const ImageButton = styled.button`
   border: none;
@@ -50,6 +51,7 @@ const Terms = styled.span`
 function SignUp() {
   return (
     <AuthLayout>
+      <PageTitle title="Sign Up" />
       <FormBox>
         <HeaderContainer>
           <FontAwesomeIcon icon={faInstagram} size="3x" />

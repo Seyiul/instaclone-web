@@ -1,16 +1,17 @@
 # INSTACLONE WEB 📸
 
-## FRONTEND SETUP
+## FRONTEND SETUP ⚙️
 
 - [x] Router
 - [x] Authentication
 - [x] Arch.
 - [x] Styles
 
-## PAGES
+## PAGES 🌈
 
 - [x] Log In / Sigh Up
 
-## REFERENCES
+## REFERENCES 📑
 
 - [Reactive Variables](https://www.apollographql.com/docs/react/local-state/reactive-variables/)
+- [React Hook Form](https://react-hook-form.com/)
