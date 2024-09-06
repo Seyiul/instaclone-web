@@ -6,6 +6,7 @@ import { useReactiveVar } from "@apollo/client";
 import { darkModeVar, isLoggedInVar } from "./apollo";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, GlobalStyles, lightTheme } from "./styles";
+import SignUp from "./screens/SignUp";
 
 const App: React.FC = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -18,10 +19,12 @@ const App: React.FC = () => {
           <Route path="/" exact>
             {isLoggedIn ? <Home /> : <Login />}
           </Route>
-          <Route path="/example">
-            <h1>Example Page</h1>
-            {!isLoggedIn && <p>Please, log in</p>}
-          </Route>
+          {!isLoggedIn ? (
+            <Route path="/sign-up">
+              <SignUp />
+            </Route>
+          ) : null}
+
           <Route>
             <NotFound />
           </Route>

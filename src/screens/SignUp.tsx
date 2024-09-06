@@ -62,6 +62,23 @@ const Button = styled.input`
   width: 100%;
   font-weight: 600;
   cursor: pointer;
+  &:disabled {
+    opacity: 0.4;
+  }
+`;
+
+const ImageButton = styled.button`
+  border: none;
+  background-color: ${(props) => props.theme.blue};
+  color: white;
+  text-align: center;
+  padding: 8px 0px;
+  width: 100%;
+  font-weight: 600;
+  cursor: pointer;
+  span {
+    margin-left: 5px;
+  }
 `;
 
 const BottomBox = styled(WhiteBox)`
@@ -98,43 +115,58 @@ const Separator = styled.div`
   }
 `;
 
-const FacebookLogin = styled.div`
-  color: #385285;
-  span {
-    margin-left: 10px;
-    font-weight: 600;
-  }
+const Logo = styled.div`
+  margin-bottom: 20px;
+`;
+const Text = styled.span`
+  font-weight: 600;
+  text-align: center;
 `;
 
-function Login() {
+const Terms = styled.span`
+  text-align: center;
+  margin-top: 20px;
+  color: gray;
+  font-weight: 500;
+  line-height: 1.8;
+`;
+
+function SignUp() {
   return (
     <Container>
       <Wrapper>
         <TopBox>
-          <div>
+          <Logo>
             <FontAwesomeIcon icon={faInstagram} size="3x" />
-          </div>
+          </Logo>
+          <Text>Sign up to see photos ans videos</Text>
+          <Text>from your friends.</Text>
           <form>
+            <ImageButton>
+              <FontAwesomeIcon icon={faFacebookSquare} />
+              <span>Log in with Facebook</span>
+            </ImageButton>
+            <Separator>
+              <div></div>
+              <span>Or</span>
+              <div></div>
+            </Separator>
+            <Input type="text" placeholder="Mobile Number or Email" />
+            <Input type="text" placeholder="Full Name" />
             <Input type="text" placeholder="Username" />
             <Input type="password" placeholder="Password" />
-            <Button type="submit" value="Log in" />
+            <Button type="submit" value="Sign Up" disabled />
           </form>
-          <Separator>
-            <div></div>
-            <span>Or</span>
-            <div></div>
-          </Separator>
-          <FacebookLogin>
-            <FontAwesomeIcon icon={faFacebookSquare} />
-            <span>Log in with Facebook</span>
-          </FacebookLogin>
+          <Terms>
+            By signing up, you agree to our Terms, Data Policy and Cookies
+            Policy.
+          </Terms>
         </TopBox>
         <BottomBox>
-          <span>Don't have an account?</span>
-          <Link to="/sign-up">Sign up</Link>
+          <span>Have an account?</span> <Link to="/">Login</Link>
         </BottomBox>
       </Wrapper>
     </Container>
   );
 }
-export default Login;
+export default SignUp;
