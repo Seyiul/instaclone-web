@@ -9,7 +9,7 @@
 
 ## PAGES
 
-- [ ] Log In / Sigh Up
+- [x] Log In / Sigh Up
 
 ## REFERENCES
 

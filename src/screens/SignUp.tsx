@@ -3,16 +3,15 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AuthLayout from "../components/auth/AuthLayout";
-import { BaseBox } from "../components/shared";
 import Button from "../components/auth/Button";
 import Separator from "../components/auth/Separator";
 import Input from "../components/auth/Input";
 import FormBox from "../components/auth/FormBox";
 import routes from "../routes";
 import BottomBox from "../components/auth/BottomBox";
+import { FatLink } from "../components/shared";
 
 const ImageButton = styled.button`
   border: none;
@@ -28,12 +27,15 @@ const ImageButton = styled.button`
   }
 `;
 
-const Logo = styled.div`
-  margin-bottom: 20px;
+const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
-const Text = styled.span`
-  font-weight: 600;
+const SubTitle = styled(FatLink)`
+  font-size: 16px;
   text-align: center;
+  margin-top: 10px;
 `;
 
 const Terms = styled.span`
@@ -42,17 +44,19 @@ const Terms = styled.span`
   color: gray;
   font-weight: 500;
   line-height: 1.8;
+  font-size: 11px;
 `;
 
 function SignUp() {
   return (
     <AuthLayout>
       <FormBox>
-        <Logo>
+        <HeaderContainer>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
-        </Logo>
-        <Text>Sign up to see photos ans videos</Text>
-        <Text>from your friends.</Text>
+          <SubTitle>
+            Sign up to see photos ans videos from your friends.
+          </SubTitle>
+        </HeaderContainer>
         <form>
           <ImageButton>
             <FontAwesomeIcon icon={faFacebookSquare} />
