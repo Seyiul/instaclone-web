@@ -14,6 +14,7 @@ import BottomBox from "../components/auth/BottomBox";
 import { useState } from "react";
 import { OnChangeType } from "../types";
 import PageTitle from "../components/PageTitle";
+import { useForm } from "react-hook-form";
 
 const FacebookLogin = styled.div`
   color: #385285;
@@ -24,16 +25,12 @@ const FacebookLogin = styled.div`
 `;
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const onUsernameChange = (event: OnChangeType) => {
-    setUsername(event.target.value);
+  const { register, watch, handleSubmit } = useForm();
+  const onSubmitValid = (data: any) => {
+    console.log(data);
   };
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    if (username.length < 10) {
-      alert("short");
-    }
-    alert(username);
+  const onSubmitInvalid = (data: any) => {
+    console.log(data, "invalid");
   };
   return (
     <AuthLayout>
@@ -42,15 +39,21 @@ function Login() {
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmitValid, onSubmitInvalid)}>
           <Input
-            value={username}
-            onChange={onUsernameChange}
+            {...register("username", {
+              required: "Username is required",
+              minLength: 5,
+            })}
             type="text"
             placeholder="Username"
           />
-          <Input type="password" placeholder="Password" />
-          <Button type="submit" value="Log in" disabled={username === ""} />
+          <Input
+            {...register("password", { required: "Password is required" })}
+            type="password"
+            placeholder="Password"
+          />
+          <Button type="submit" value="Log in" />
         </form>
         <Separator />
         <FacebookLogin>

@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 const SInput = styled.input`
@@ -13,8 +14,11 @@ const SInput = styled.input`
   }
 `;
 
-const Input = (props: React.ComponentPropsWithRef<"input">) => {
-  return <SInput {...props} />;
-};
+const Input = forwardRef<
+  HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement>
+>((props, ref) => {
+  return <SInput ref={ref} {...props} />;
+});
 
 export default Input;
