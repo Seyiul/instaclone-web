@@ -14,6 +14,7 @@ import BottomBox from "../components/auth/BottomBox";
 import PageTitle from "../components/PageTitle";
 import { useForm } from "react-hook-form";
 import FormError from "../components/auth/FormError";
+import Logo from "../components/Logo";
 
 const FacebookLogin = styled.div`
   color: #385285;
@@ -33,9 +34,7 @@ function Login() {
     <AuthLayout>
       <PageTitle title="Login" />
       <FormBox>
-        <div>
-          <FontAwesomeIcon icon={faInstagram} size="3x" />
-        </div>
+        <Logo />
         <form onSubmit={handleSubmit(onSubmitValid, onSubmitInvalid)}>
           <Input
             {...register("username", {

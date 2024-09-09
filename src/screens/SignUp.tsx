@@ -13,6 +13,7 @@ import routes from "../routes";
 import BottomBox from "../components/auth/BottomBox";
 import { FatLink } from "../components/shared";
 import PageTitle from "../components/PageTitle";
+import Logo from "../components/Logo";
 
 const ImageButton = styled.button`
   border: none;
@@ -54,7 +55,7 @@ function SignUp() {
       <PageTitle title="Sign Up" />
       <FormBox>
         <HeaderContainer>
-          <FontAwesomeIcon icon={faInstagram} size="3x" />
+          <Logo />
           <SubTitle>
             Sign up to see photos ans videos from your friends.
           </SubTitle>
