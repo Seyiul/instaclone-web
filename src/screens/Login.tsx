@@ -1,7 +1,4 @@
-import {
-  faFacebookSquare,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
+import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import routes from "../routes";
@@ -16,6 +13,7 @@ import { useForm } from "react-hook-form";
 import FormError from "../components/auth/FormError";
 import Logo from "../components/Logo";
 import { gql, useMutation } from "@apollo/client";
+import { logUserIn } from "../apollo";
 
 const FacebookLogin = styled.div`
   color: #385285;
@@ -36,10 +34,17 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
-  const { register, watch, handleSubmit, formState, getValues, setError } =
-    useForm({
-      mode: "onBlur",
-    });
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState,
+    getValues,
+    setError,
+    clearErrors,
+  } = useForm({
+    mode: "onChange",
+  });
   const onCompleted = (data: any) => {
     const {
       login: { ok, error, token },
@@ -49,6 +54,10 @@ function Login() {
       setError("result", {
         message: error,
       });
+    }
+
+    if (token) {
+      logUserIn(token);
     }
   };
   const [login, { loading, data, called }] = useMutation(LOGIN_MUTATION, {
@@ -66,6 +75,9 @@ function Login() {
         password,
       },
     });
+  };
+  const clearLoginError = () => {
+    clearErrors("result");
   };
   const onSubmitInvalid = (data: any) => {};
   return (
@@ -85,6 +97,7 @@ function Login() {
             type="text"
             placeholder="Username"
             hasError={Boolean(formState.errors?.username?.message)}
+            onFocus={clearLoginError}
           />
           {formState.errors.username && (
             <FormError message={formState.errors.username.message as string} />
@@ -94,6 +107,7 @@ function Login() {
             type="password"
             placeholder="Password"
             hasError={Boolean(formState.errors?.password?.message)}
+            onFocus={clearLoginError}
           />
           {formState.errors.password && (
             <FormError message={formState.errors.password.message as string} />
