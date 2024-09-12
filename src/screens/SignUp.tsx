@@ -14,6 +14,9 @@ import BottomBox from "../components/auth/BottomBox";
 import { FatLink } from "../components/shared";
 import PageTitle from "../components/PageTitle";
 import Logo from "../components/Logo";
+import { gql, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import FormError from "../components/auth/FormError";
 
 const ImageButton = styled.button`
   border: none;
@@ -50,6 +53,50 @@ const Terms = styled.span`
 `;
 
 function SignUp() {
+  const { register, handleSubmit, formState, setError } = useForm({
+    mode: "onBlur",
+  });
+  const SIGNUP_MUTATION = gql`
+    mutation createAccount(
+      $firstName: String!
+      $lastName: String
+      $username: String!
+      $email: String!
+      $password: String
+    ) {
+      createAccount(
+        firstName: $firstName
+        lastName: $lastName
+        username: $username
+        email: $email
+        password: $password
+      ) {
+        ok
+        token
+        error
+      }
+    }
+  `;
+
+  const onCompleted = (data: any) => {
+    const {
+      createAccount: { ok, error, token },
+    } = data;
+
+    if (!ok) {
+      setError("result", {
+        message: error,
+      });
+    }
+  };
+
+  const [signup, { loading }] = useMutation(SIGNUP_MUTATION, {
+    onCompleted,
+  });
+
+  const onSubmitValid = () => {
+    if (loading) return;
+  };
   return (
     <AuthLayout>
       <PageTitle title="Sign Up" />
@@ -60,17 +107,53 @@ function SignUp() {
             Sign up to see photos ans videos from your friends.
           </SubTitle>
         </HeaderContainer>
-        <form>
+        <form onSubmit={handleSubmit(onSubmitValid)}>
           <ImageButton>
             <FontAwesomeIcon icon={faFacebookSquare} />
             <span>Log in with Facebook</span>
           </ImageButton>
           <Separator />
-          <Input type="text" placeholder="Mobile Number or Email" />
-          <Input type="text" placeholder="Full Name" />
-          <Input type="text" placeholder="Username" />
-          <Input type="password" placeholder="Password" />
-          <Button type="submit" value="Sign Up" disabled />
+          <Input
+            {...register("email", {
+              required: "Email is required",
+            })}
+            type="text"
+            placeholder="Email"
+          />
+          <Input
+            {...register("firstName", {
+              required: "First Name is required",
+            })}
+            type="text"
+            placeholder="First Name"
+          />
+          <Input
+            {...register("lastName", {})}
+            type="text"
+            placeholder="Last Name"
+          />
+          <Input
+            {...register("username", {
+              required: "Username is required",
+            })}
+            type="text"
+            placeholder="Username"
+          />
+          <Input
+            {...register("password", {
+              required: "Password is required",
+            })}
+            type="password"
+            placeholder="Password"
+          />
+          <Button
+            type="submit"
+            value={loading ? "Loading..." : "Sign Up"}
+            disabled={!formState.isValid || loading}
+          />
+          {formState.errors.result && (
+            <FormError message={formState.errors.result.message as string} />
+          )}{" "}
         </form>
         <Terms>
           By signing up, you agree to our Terms, Data Policy and Cookies Policy.
