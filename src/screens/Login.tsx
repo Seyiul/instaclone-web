@@ -14,6 +14,9 @@ import FormError from "../components/auth/FormError";
 import Logo from "../components/Logo";
 import { gql, useMutation } from "@apollo/client";
 import { logUserIn } from "../apollo";
+import { useLocation } from "react-router-dom";
+import { LocalState } from "@apollo/client/core/LocalState";
+import SubTitle from "../components/auth/Subtitle";
 
 const FacebookLogin = styled.div`
   color: #385285;
@@ -21,6 +24,10 @@ const FacebookLogin = styled.div`
     margin-left: 10px;
     font-weight: 600;
   }
+`;
+
+const Notification = styled(SubTitle)`
+  color: #05c46b;
 `;
 
 const LOGIN_MUTATION = gql`
@@ -33,7 +40,14 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
+interface LocationState {
+  message: string;
+  username: string;
+  password: string;
+}
+
 function Login() {
+  const location = useLocation<LocationState>();
   const {
     register,
     watch,
@@ -44,6 +58,11 @@ function Login() {
     clearErrors,
   } = useForm({
     mode: "onChange",
+    defaultValues: {
+      username: location?.state?.username || "",
+      password: location?.state?.password || "",
+      result: "",
+    },
   });
   const onCompleted = (data: any) => {
     const {
@@ -85,6 +104,9 @@ function Login() {
       <PageTitle title="Login" />
       <FormBox>
         <Logo />
+        {location?.state?.message && (
+          <Notification title={location.state.message} />
+        )}
         <form onSubmit={handleSubmit(onSubmitValid, onSubmitInvalid)}>
           <Input
             {...register("username", {

@@ -11,6 +11,7 @@ export const lightTheme: DefaultTheme = {
 export const darkTheme: DefaultTheme = {
   fontColor: "#FAFAFA",
   bgColor: "#2c2c2c",
+  borderColor: "rgb(219, 219, 219)",
 };
 
 export const GlobalStyles = createGlobalStyle`
@@ -25,7 +26,7 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${(props) => props.theme.bgColor};
         font-size: 14px;
         font-family: "Open Sans", sans-serif;
-        color: rgb(38,38,38);
+        color: ${(props) => props.theme.fontColor};
     }
     a{
         text-decoration: none;

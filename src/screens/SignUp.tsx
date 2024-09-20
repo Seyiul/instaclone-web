@@ -18,6 +18,7 @@ import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import FormError from "../components/auth/FormError";
 import { useHistory } from "react-router-dom";
+import SubTitle from "../components/auth/Subtitle";
 
 const ImageButton = styled.button`
   border: none;
@@ -37,11 +38,6 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-const SubTitle = styled(FatLink)`
-  font-size: 16px;
-  text-align: center;
-  margin-top: 10px;
 `;
 
 const Terms = styled.span`
@@ -77,6 +73,7 @@ const CREATE_ACCOUNT_MUTATION = gql`
 function SignUp() {
   const history = useHistory();
   const onCompleted = (data: any) => {
+    const { username, password } = getValues();
     const {
       createAccount: { ok, error },
     } = data;
@@ -87,14 +84,25 @@ function SignUp() {
       });
     }
 
-    history.push(routes.home);
+    history.push(routes.home, {
+      message: "Account created. Please log in.",
+      username,
+      password,
+    });
   };
 
   const [createAccount, { loading }] = useMutation(CREATE_ACCOUNT_MUTATION, {
     onCompleted,
   });
 
-  const { register, handleSubmit, formState, setError, clearErrors } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState,
+    setError,
+    clearErrors,
+    getValues,
+  } = useForm({
     mode: "onChange",
   });
 
@@ -119,9 +127,7 @@ function SignUp() {
       <FormBox>
         <HeaderContainer>
           <Logo />
-          <SubTitle>
-            Sign up to see photos ans videos from your friends.
-          </SubTitle>
+          <SubTitle title="Sign up to see photos ans videos from your friends." />
         </HeaderContainer>
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <ImageButton>
