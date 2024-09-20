@@ -17,6 +17,7 @@ import Logo from "../components/Logo";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import FormError from "../components/auth/FormError";
+import { useHistory } from "react-router-dom";
 
 const ImageButton = styled.button`
   border: none;
@@ -52,35 +53,32 @@ const Terms = styled.span`
   font-size: 11px;
 `;
 
-function SignUp() {
-  const { register, handleSubmit, formState, setError } = useForm({
-    mode: "onBlur",
-  });
-  const SIGNUP_MUTATION = gql`
-    mutation createAccount(
-      $firstName: String!
-      $lastName: String
-      $username: String!
-      $email: String!
-      $password: String
+const CREATE_ACCOUNT_MUTATION = gql`
+  mutation createAccount(
+    $firstName: String!
+    $lastName: String
+    $username: String!
+    $email: String!
+    $password: String!
+  ) {
+    createAccount(
+      firstName: $firstName
+      lastName: $lastName
+      username: $username
+      email: $email
+      password: $password
     ) {
-      createAccount(
-        firstName: $firstName
-        lastName: $lastName
-        username: $username
-        email: $email
-        password: $password
-      ) {
-        ok
-        token
-        error
-      }
+      ok
+      error
     }
-  `;
+  }
+`;
 
+function SignUp() {
+  const history = useHistory();
   const onCompleted = (data: any) => {
     const {
-      createAccount: { ok, error, token },
+      createAccount: { ok, error },
     } = data;
 
     if (!ok) {
@@ -88,14 +86,32 @@ function SignUp() {
         message: error,
       });
     }
+
+    history.push(routes.home);
   };
 
-  const [signup, { loading }] = useMutation(SIGNUP_MUTATION, {
+  const [createAccount, { loading }] = useMutation(CREATE_ACCOUNT_MUTATION, {
     onCompleted,
   });
 
-  const onSubmitValid = () => {
-    if (loading) return;
+  const { register, handleSubmit, formState, setError, clearErrors } = useForm({
+    mode: "onChange",
+  });
+
+  const onSubmitValid = (data: any) => {
+    if (loading) {
+      return;
+    }
+
+    createAccount({
+      variables: {
+        ...data,
+      },
+    });
+  };
+
+  const clearError = () => {
+    clearErrors("result");
   };
   return (
     <AuthLayout>
@@ -116,36 +132,65 @@ function SignUp() {
           <Input
             {...register("email", {
               required: "Email is required",
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: "Entered value does not match email format",
+              },
             })}
             type="text"
             placeholder="Email"
+            hasError={Boolean(formState.errors?.email?.message)}
+            onFocus={clearError}
           />
+          {formState.errors.email && (
+            <FormError message={formState.errors.email.message as string} />
+          )}
           <Input
             {...register("firstName", {
               required: "First Name is required",
             })}
             type="text"
             placeholder="First Name"
+            hasError={Boolean(formState.errors?.firstName?.message)}
+            onFocus={clearError}
           />
+          {formState.errors.firstName && (
+            <FormError message={formState.errors.firstName.message as string} />
+          )}
           <Input
             {...register("lastName", {})}
             type="text"
             placeholder="Last Name"
+            hasError={Boolean(formState.errors?.lastName?.message)}
+            onFocus={clearError}
           />
+          {formState.errors.lastName && (
+            <FormError message={formState.errors.lastName.message as string} />
+          )}
           <Input
             {...register("username", {
               required: "Username is required",
             })}
             type="text"
             placeholder="Username"
+            hasError={Boolean(formState.errors?.username?.message)}
+            onFocus={clearError}
           />
+          {formState.errors.username && (
+            <FormError message={formState.errors.username.message as string} />
+          )}
           <Input
             {...register("password", {
               required: "Password is required",
             })}
             type="password"
             placeholder="Password"
+            hasError={Boolean(formState.errors?.password?.message)}
+            onFocus={clearError}
           />
+          {formState.errors.password && (
+            <FormError message={formState.errors.password.message as string} />
+          )}
           <Button
             type="submit"
             value={loading ? "Loading..." : "Sign Up"}
