@@ -24,6 +24,6 @@ function useUser() {
       logUserOut(history);
     }
   }, [data]);
-  return;
+  return { data };
 }
 export default useUser;

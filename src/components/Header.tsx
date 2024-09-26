@@ -8,6 +8,7 @@ import { faCompass, faUser } from "@fortawesome/free-regular-svg-icons";
 import routes from "../routes";
 import { Link } from "react-router-dom";
 import useUser from "../hooks/useUser";
+import Avatar from "./Avatar";
 
 const SHeader = styled.header`
   width: 100%;
@@ -25,6 +26,12 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
+const IconsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Column = styled.div``;
 const Icon = styled.span`
   margin-left: 15px;
@@ -40,7 +47,7 @@ const Button = styled.span`
 
 const Header = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
-  const loggedInUser = useUser();
+  const { data } = useUser();
   return (
     <SHeader>
       <Wrapper>
@@ -49,7 +56,7 @@ const Header = () => {
         </Column>
         <Column>
           {isLoggedIn ? (
-            <>
+            <IconsContainer>
               <Icon>
                 <FontAwesomeIcon icon={faHome} size="lg" />
               </Icon>
@@ -57,9 +64,9 @@ const Header = () => {
                 <FontAwesomeIcon icon={faCompass} size="lg" />
               </Icon>
               <Icon>
-                <FontAwesomeIcon icon={faUser} size="lg" />
+                <Avatar url={data?.me?.avatar || ""} />
               </Icon>
-            </>
+            </IconsContainer>
           ) : (
             <Link to={routes.home}>
               <Button>Login</Button>
