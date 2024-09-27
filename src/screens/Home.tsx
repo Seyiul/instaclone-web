@@ -7,12 +7,18 @@ interface User {
   username: string;
   avatar: string;
 }
+
+interface Comment {
+  payload: string;
+  user: User;
+}
 export interface Photo {
   id: number;
   user: User;
   file: string;
   caption: string;
-  comments: [string];
+  comments: [Comment];
+  commentNumber: number;
   likes: number;
   createdAt: string;
   isMine: boolean;
@@ -29,11 +35,18 @@ const FEED_QUERY = gql`
       }
       file
       caption
-      comments
       likes
       createdAt
       isMine
       isLiked
+      commentNumber
+      comments {
+        payload
+        user {
+          username
+          avatar
+        }
+      }
     }
   }
 `;

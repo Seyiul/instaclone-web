@@ -78,7 +78,32 @@ const Likes = styled(FatText)`
   display: block;
 `;
 
-function Photo({ id, user, file, isLiked, likes }: PhotoTypes) {
+const Comments = styled.div`
+  margin-top: 20px;
+`;
+const Comment = styled.div``;
+const CommentCaption = styled.span`
+  margin-left: 10px;
+`;
+
+const CommentCount = styled.span`
+  opacity: 0.7;
+  font-size: 10px;
+  margin: 10px 0px;
+  display: block;
+  font-weight: 600;
+`;
+
+function Photo({
+  id,
+  user,
+  file,
+  isLiked,
+  likes,
+  caption,
+  commentNumber,
+  comments,
+}: PhotoTypes) {
   const updateToggleLike = (cache: any, result: any) => {
     const {
       data: {
@@ -151,6 +176,21 @@ function Photo({ id, user, file, isLiked, likes }: PhotoTypes) {
           </div>
         </PhotoActions>
         <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
+        <Comments>
+          <Comment>
+            <FatText>{user.username}</FatText>
+            <CommentCaption>{caption}</CommentCaption>
+          </Comment>
+          <CommentCount>
+            {commentNumber === 1 ? "1 comment" : `${commentNumber} comments`}
+          </CommentCount>
+          {comments?.map((comment) => (
+            <div>
+              <span>{comment.user.username}</span>
+              <span>{comment.payload}</span>
+            </div>
+          ))}
+        </Comments>
       </PhotoInfo>
     </PhotoContainer>
   );
