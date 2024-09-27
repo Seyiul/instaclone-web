@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import Photo from "../components/feed/Photo";
+import PageTitle from "../components/PageTitle";
 
 interface User {
   username: string;
@@ -42,6 +43,7 @@ const Home = () => {
   const history = useHistory();
   return (
     <>
+      <PageTitle title="Home" />
       {data?.seeFeed?.map((photo: Photo) => (
         <Photo key={photo.id} {...photo} />
       ))}
