@@ -3,12 +3,13 @@ import { gql, useQuery } from "@apollo/client";
 import Photo from "../components/feed/Photo";
 import PageTitle from "../components/PageTitle";
 
-interface User {
+export interface User {
   username: string;
   avatar: string;
 }
 
-interface Comment {
+export interface Comment {
+  id: number;
   payload: string;
   user: User;
 }
@@ -41,6 +42,7 @@ const FEED_QUERY = gql`
       isLiked
       commentNumber
       comments {
+        id
         payload
         user {
           username
