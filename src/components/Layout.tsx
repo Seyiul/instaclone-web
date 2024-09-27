@@ -3,10 +3,10 @@ import Header from "./Header";
 import styled from "styled-components";
 
 const Content = styled.main`
+  margin: 0 auto;
   margin-top: 45px;
   max-width: 930px;
   width: 100%;
-  margin: 30px auto;
 `;
 
 function Layout({ children }: { children: ReactNode }) {
