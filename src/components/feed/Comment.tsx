@@ -1,6 +1,8 @@
 import sanitizeHtml from "sanitize-html";
 import styled from "styled-components";
 import { FatText } from "../shared";
+import { Link } from "react-router-dom";
+import React from "react";
 
 const SComment = styled.div`
   margin-bottom: 8px;
@@ -9,12 +11,12 @@ const SComment = styled.div`
 const CommentCaption = styled.span`
   margin-left: 10px;
 
-  mark {
+  a {
     background-color: inherit;
     color: ${(props) => props.theme.accent};
     cursor: pointer;
     &:hover {
-      text-decoration: underline;
+      font-weight: 600;
     }
   }
 `;
@@ -24,22 +26,22 @@ interface CommentProps {
 }
 
 function Comment({ author, payload }: CommentProps) {
-  const cleanPayload = sanitizeHtml(
-    payload.replace(/#[\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/g, "<mark>$&</mark>"),
-
-    {
-      allowedTags: ["mark"],
-    }
-  );
+  const regex = /[@#][\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/;
 
   return (
     <SComment>
       <FatText>{author}</FatText>
-      <CommentCaption
-        dangerouslySetInnerHTML={{
-          __html: cleanPayload,
-        }}
-      ></CommentCaption>
+      <CommentCaption>
+        {payload.split(" ").map((word, idx) =>
+          regex.test(word) ? (
+            <React.Fragment key={idx}>
+              <Link to={`/hashtags/${word}`}>{word}</Link>{" "}
+            </React.Fragment>
+          ) : (
+            <React.Fragment key={idx}>{word} </React.Fragment>
+          )
+        )}
+      </CommentCaption>
     </SComment>
   );
 }
