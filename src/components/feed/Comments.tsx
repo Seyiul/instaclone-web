@@ -73,7 +73,7 @@ function Comments({
 
       const newComment = {
         __typename: "Comment",
-        createAt: Date.now(),
+        createAt: Date.now() + "",
         id,
         isMine: true,
         payload,
@@ -85,6 +85,9 @@ function Comments({
         fields: {
           comments(prev: Array<any>) {
             return [...prev, newComment];
+          },
+          commentNumber(prev: number) {
+            return prev + 1;
           },
         },
       });

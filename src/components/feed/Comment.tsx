@@ -1,4 +1,3 @@
-import sanitizeHtml from "sanitize-html";
 import styled from "styled-components";
 import { FatText } from "../shared";
 import { Link } from "react-router-dom";
@@ -38,7 +37,9 @@ function Comment({ author, payload }: CommentProps) {
               <Link to={`/hashtags/${word}`}>{word}</Link>{" "}
             </React.Fragment>
           ) : regexPF.test(word) ? (
-            <Link to={`/profile/${word}`}>{word}</Link>
+            <React.Fragment key={idx}>
+              <Link to={`/profile/${word}`}>{word}</Link>
+            </React.Fragment>
           ) : (
             <React.Fragment key={idx}>{word} </React.Fragment>
           )
