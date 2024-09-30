@@ -26,17 +26,19 @@ interface CommentProps {
 }
 
 function Comment({ author, payload }: CommentProps) {
-  const regex = /[@#][\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/;
-
+  const regexHT = /#[\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/;
+  const regexPF = /@[\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/;
   return (
     <SComment>
       <FatText>{author}</FatText>
       <CommentCaption>
         {payload.split(" ").map((word, idx) =>
-          regex.test(word) ? (
+          regexHT.test(word) ? (
             <React.Fragment key={idx}>
               <Link to={`/hashtags/${word}`}>{word}</Link>{" "}
             </React.Fragment>
+          ) : regexPF.test(word) ? (
+            <Link to={`/profile/${word}`}>{word}</Link>
           ) : (
             <React.Fragment key={idx}>{word} </React.Fragment>
           )
