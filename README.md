@@ -17,4 +17,4 @@
 
 - [Reactive Variables](https://www.apollographql.com/docs/react/local-state/reactive-variables/)
 - [React Hook Form](https://react-hook-form.com/)
-- [Apollo Header Link](https://www.apollographql.com/docs/react/networking/authentication/#header) -[Refetching Queries](https://www.apollographql.com/docs/react/data/mutations/#refetching-queries) -[sanitize-html](https://www.npmjs.com/package/sanitize-html)
+- [Apollo Header Link](https://www.apollographql.com/docs/react/networking/authentication/#header) -[Refetching Queries](https://www.apollographql.com/docs/react/data/mutations/#refetching-queries) -[sanitize-html](https://www.npmjs.com/package/sanitize-html) -[Modify Cache](https://github.com/Seyiul/instaclone-web/issues/1)
