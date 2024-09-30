@@ -11,6 +11,7 @@ import routes from "./routes";
 import { HelmetProvider } from "react-helmet-async";
 import Header from "./components/Header";
 import Layout from "./components/Layout";
+import Profile from "./screens/Profile";
 
 const App: React.FC = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -36,7 +37,9 @@ const App: React.FC = () => {
                   <SignUp />
                 </Route>
               ) : null}
-
+              <Route path={`/profile/:username`}>
+                <Profile />
+              </Route>
               <Route>
                 <NotFound />
               </Route>

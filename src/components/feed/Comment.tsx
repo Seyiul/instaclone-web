@@ -89,7 +89,9 @@ function Comment({ author, payload, id, isMine, photoId }: CommentProps) {
   return (
     <SComment>
       <div>
-        <FatText>{author}</FatText>
+        <Link to={`/profile/${author}`}>
+          <FatText>{author}</FatText>
+        </Link>
         <CommentCaption>
           {payload.split(" ").map((word, idx) =>
             regexHT.test(word) ? (
@@ -98,7 +100,7 @@ function Comment({ author, payload, id, isMine, photoId }: CommentProps) {
               </React.Fragment>
             ) : regexPF.test(word) ? (
               <React.Fragment key={idx}>
-                <Link to={`/profile/${word}`}>{word}</Link>
+                <Link to={`/profile/${word.slice(1)}`}>{word}</Link>
               </React.Fragment>
             ) : (
               <React.Fragment key={idx}>{word} </React.Fragment>
