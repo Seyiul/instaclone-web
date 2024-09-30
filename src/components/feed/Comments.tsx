@@ -73,18 +73,33 @@ function Comments({
 
       const newComment = {
         __typename: "Comment",
-        createAt: Date.now() + "",
+        createdAt: Date.now() + "",
         id,
         isMine: true,
         payload,
         user: { ...userData.me },
       };
 
+      const newCacheComment = cache.writeFragment({
+        data: newComment,
+        fragment: gql`
+          fragment FGName on Comment {
+            id
+            createdAt
+            isMine
+            payload
+            user {
+              username
+              avatar
+            }
+          }
+        `,
+      });
       cache.modify({
         id: `Photo:${photoId}`,
         fields: {
           comments(prev: Array<any>) {
-            return [...prev, newComment];
+            return [...prev, newCacheComment];
           },
           commentNumber(prev: number) {
             return prev + 1;
