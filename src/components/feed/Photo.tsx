@@ -154,6 +154,7 @@ function Photo({
           caption={caption}
           comments={comments}
           commentNumber={commentNumber}
+          photoId={id}
         />
       </PhotoInfo>
     </PhotoContainer>

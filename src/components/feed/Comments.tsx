@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { FatText } from "../shared";
 import { Comment as CommentTypes } from "../../screens/Home";
 import Comment from "./Comment";
+import { useForm } from "react-hook-form";
+import { gql, useMutation } from "@apollo/client";
 
 const CommentsContainer = styled.div`
   margin-top: 20px;
@@ -20,9 +22,43 @@ export interface CommentsTypes {
   caption: string;
   commentNumber: number;
   comments: [CommentTypes];
+  photoId: number;
 }
 
-function Comments({ author, caption, commentNumber, comments }: CommentsTypes) {
+const CREATE_COMMENT_MUTATION = gql`
+  mutation createComment($photoId: Int!, $payload: String!) {
+    createComment(photoId: $photoId, payload: $payload) {
+      ok
+      error
+    }
+  }
+`;
+
+function Comments({
+  author,
+  caption,
+  commentNumber,
+  comments,
+  photoId,
+}: CommentsTypes) {
+  const [createCommentMutation, { loading }] = useMutation(
+    CREATE_COMMENT_MUTATION
+  );
+  const { register, handleSubmit, setValue } = useForm();
+  const onValid = (data: any) => {
+    const { payload } = data;
+    if (loading) {
+      return;
+    }
+    createCommentMutation({
+      variables: {
+        photoId,
+        payload,
+      },
+    });
+
+    setValue("payload", "");
+  };
   return (
     <CommentsContainer>
       <Comment author={author} payload={caption} />
@@ -36,6 +72,15 @@ function Comments({ author, caption, commentNumber, comments }: CommentsTypes) {
           payload={comment.payload}
         />
       ))}
+      <div>
+        <form onSubmit={handleSubmit(onValid)}>
+          <input
+            {...register("payload", { required: true })}
+            type="text"
+            placeholder="Write a comment..."
+          ></input>
+        </form>
+      </div>
     </CommentsContainer>
   );
 }
