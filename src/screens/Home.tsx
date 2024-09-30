@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import Photo from "../components/feed/Photo";
 import PageTitle from "../components/PageTitle";
+import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
 
 export interface User {
   username: string;
@@ -30,29 +31,21 @@ export interface Photo {
 const FEED_QUERY = gql`
   query seeFeed {
     seeFeed {
-      id
+      ...PhotoFragment
       user {
         username
         avatar
       }
-      file
       caption
-      likes
       createdAt
       isMine
-      isLiked
-      commentNumber
       comments {
-        id
-        payload
-        isMine
-        user {
-          username
-          avatar
-        }
+        ...CommentFragment
       }
     }
   }
+  ${PHOTO_FRAGMENT}
+  ${COMMENT_FRAGMENT}
 `;
 
 const Home = () => {
