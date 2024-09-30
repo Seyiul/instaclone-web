@@ -21,3 +21,4 @@
 - [Refetching Queries](https://www.apollographql.com/docs/react/data/mutations/#refetching-queries)
 - [sanitize-html](https://www.npmjs.com/package/sanitize-html)
 - [Modify Cache](https://github.com/Seyiul/instaclone-web/issues/1)
+- [Cache Evict](https://www.apollographql.com/docs/react/caching/garbage-collection/#cacheevict)

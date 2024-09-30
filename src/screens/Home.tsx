@@ -12,6 +12,7 @@ export interface Comment {
   id: number;
   payload: string;
   user: User;
+  isMine: boolean;
 }
 export interface Photo {
   id: number;
@@ -44,6 +45,7 @@ const FEED_QUERY = gql`
       comments {
         id
         payload
+        isMine
         user {
           username
           avatar
