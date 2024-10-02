@@ -1,21 +1,57 @@
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { PHOTO_FRAGMENT } from "../fragments";
-import Avatar from "../components/Avatar";
 import styled from "styled-components";
-const InfoContainer = styled.div`
-  width: 100%;
+import { FatText } from "../components/shared";
+import { PhotoFile } from "../components/feed/Photo";
+import { Photo } from "./Home";
+const Header = styled.div`
   display: flex;
-  justify-content: center;
+`;
+const Avatar = styled.img`
+  margin-left: 50px;
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  margin-right: 150px;
+  background-color: #2c2c2c;
+`;
+const Column = styled.div``;
+const Username = styled.h3`
+  font-size: 28px;
+  font-weight: 400;
+`;
+const Row = styled.div`
+  margin-bottom: 20px;
+  font-size: 16px;
+`;
+const List = styled.ul`
+  display: flex;
+`;
+const Item = styled.li`
+  margin-right: 20px;
+`;
+const Value = styled(FatText)`
+  font-size: 18px;
+`;
+const Name = styled(FatText)`
+  font-size: 20px;
 `;
 
-const ProfileInfo = styled.div`
-  display: flex;
-  flex-direction: column;
+const PhotoGrid = styled.div`
+  display: grid;
+  grid-auto-rows: 290px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 50px;
 `;
-const Username = styled.div``;
-const FollowInfo = styled.div``;
-const Bio = styled.div``;
+
+const PhotoUnit = styled.div`
+  width: 100%;
+  background-color: white;
+  aspect-ratio: 1;
+  cursor: pointer;
+`;
 
 interface ParamTypes {
   username: string;
@@ -51,19 +87,45 @@ function Profile() {
 
   console.log(data);
   return (
-    <>
-      <InfoContainer>
-        <Avatar url={data.seeProfile.avatar} />
-        <ProfileInfo>
-          <Username>{data.seeProfile.username}</Username>
-          <FollowInfo>
-            <span>{data.seeProfile.totalFollowers}followers</span>
-            <span>{data.seeProfile.totalFollowing}following</span>
-          </FollowInfo>
-          <Bio>{data.seeProfile.bio}</Bio>
-        </ProfileInfo>
-      </InfoContainer>
-    </>
+    <div>
+      <Header>
+        <Avatar src={data?.seeProfile?.avatar} />
+        <Column>
+          <Row>
+            <Username>{data?.seeProfile?.username}</Username>
+          </Row>
+          <Row>
+            <List>
+              <Item>
+                <span>
+                  <Value>{data?.seeProfile?.totalFollowers}</Value> followers
+                </span>
+              </Item>
+              <Item>
+                <span>
+                  <Value>{data?.seeProfile?.totalFollowing}</Value> following
+                </span>
+              </Item>
+            </List>
+          </Row>
+          <Row>
+            <Name>
+              {data?.seeProfile?.firstName}
+              {"  "}
+              {data?.seeProfile?.lastName}
+            </Name>
+          </Row>
+          <Row>{data?.seeProfile?.bio}</Row>
+        </Column>
+      </Header>
+      <PhotoGrid>
+        {data?.seeProfile?.photos.map((photo: Photo) => (
+          <PhotoUnit>
+            <PhotoFile src={photo.file}></PhotoFile>
+          </PhotoUnit>
+        ))}
+      </PhotoGrid>
+    </div>
   );
 }
 
