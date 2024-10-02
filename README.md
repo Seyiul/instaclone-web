@@ -12,6 +12,10 @@
 ## PAGES 🌈
 
 - [x] Log In / Sigh Up
+- [x] Feed (Like/UnLike)
+- [x] Profile (Follow/UnFollow)
+- [ ] Upload Photo
+- [ ] DM 
 
 ## REFERENCES 📑
 
