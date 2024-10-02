@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import { PHOTO_FRAGMENT } from "../fragments";
 import styled from "styled-components";
 import { FatText } from "../components/shared";
-import { PhotoFile } from "../components/feed/Photo";
 import { Photo } from "./Home";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 const Header = styled.div`
   display: flex;
 `;
@@ -46,11 +47,41 @@ const PhotoGrid = styled.div`
   margin-top: 50px;
 `;
 
-const PhotoUnit = styled.div`
-  width: 100%;
-  background-color: white;
-  aspect-ratio: 1;
+const PhotoFile = styled.div<{ bg: string }>`
+  background-image: url(${(props) => props.bg});
+  background-size: cover;
+  position: relative;
   cursor: pointer;
+  aspect-ratio: 1;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-position: center;
+`;
+
+const Icons = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  opacity: 0;
+  &:hover {
+    opacity: 1;
+  }
+`;
+const Icon = styled.span`
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin: 0px 5px;
+  svg {
+    font-size: 14px;
+    margin-right: 5px;
+  }
 `;
 
 interface ParamTypes {
@@ -120,9 +151,18 @@ function Profile() {
       </Header>
       <PhotoGrid>
         {data?.seeProfile?.photos.map((photo: Photo) => (
-          <PhotoUnit>
-            <PhotoFile src={photo.file}></PhotoFile>
-          </PhotoUnit>
+          <PhotoFile bg={photo.file} key={photo.id}>
+            <Icons>
+              <Icon>
+                <FontAwesomeIcon icon={faHeart} />
+                {photo.likes}
+              </Icon>
+              <Icon>
+                <FontAwesomeIcon icon={faComment} />
+                {photo.commentNumber}
+              </Icon>
+            </Icons>
+          </PhotoFile>
         ))}
       </PhotoGrid>
     </div>
