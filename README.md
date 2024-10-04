@@ -15,7 +15,22 @@
 - [x] Feed (Like/UnLike)
 - [x] Profile (Follow/UnFollow)
 - [ ] Upload Photo
-- [ ] DM 
+- [ ] DM
+
+## SCREENS 🖼️
+### Authentication
+|  ![image](https://github.com/user-attachments/assets/0b263782-ad63-462c-a697-59adbf676924) | ![image](https://github.com/user-attachments/assets/4471ae75-e6cf-493f-a174-47d16a724d4b) |
+|------------------------|------------------------|
+
+### FEED
+![image](https://github.com/user-attachments/assets/1ab5c81d-706a-4b5f-bcf5-bf7eb370fc66)
+
+### PROFILE
+![image](https://github.com/user-attachments/assets/53c621ec-b361-4565-9b62-decdfc959414)
+
+### DARKMODE 🌝
+| ![image](https://github.com/user-attachments/assets/a7dabdb0-bd33-4b4b-b00d-ad802eabdb21) | ![image](https://github.com/user-attachments/assets/9be98dac-a02b-4bd1-ab57-301a2f0791cb) |
+|------------------------|------------------------|
 
 ## REFERENCES 📑
 
